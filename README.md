@@ -4,7 +4,7 @@ Projeto colaborativo de gestão de manutenção e equipes de campo para empresas
 
 ## Prévia do login
 
-![Tela de login do CampoLivre com identidade verde, campos de e-mail e senha e aviso de demonstração](docs/images/login.png)
+![Tela de login do CampoLivre com identidade verde, campos de e-mail e senha e aviso de demonstração](docs/images/login.jpg)
 
 Interface demonstrativa, ainda sem autenticação real.
 
