@@ -2,6 +2,12 @@
 
 Projeto colaborativo de gestão de manutenção e equipes de campo para empresas de diferentes setores. O CampoLivre tem marca própria e não é um sistema exclusivo de uma empresa. Esta primeira entrega contém a estrutura do frontend e uma página de login responsiva para apresentação ao grupo.
 
+## Prévia do login
+
+![Tela de login do CampoLivre com identidade verde, campos de e-mail e senha e aviso de demonstração](docs/images/login.png)
+
+Interface demonstrativa, ainda sem autenticação real.
+
 ## Executar
 
 Use Node.js 22.12 ou superior e npm.
