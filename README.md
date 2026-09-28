@@ -2,6 +2,8 @@
 
 Projeto colaborativo de gestão de manutenção e equipes de campo para empresas de diferentes setores. O CampoLivre tem marca própria e não é um sistema exclusivo de uma empresa. Esta primeira entrega contém a estrutura do frontend e uma página de login responsiva para apresentação ao grupo.
 
+Consulte o [plano do projeto](docs/plano-do-projeto.md) para conhecer os requisitos previstos para as próximas etapas.
+
 ## Prévia do login
 
 ![Tela de login do CampoLivre com identidade verde, campos de e-mail e senha e aviso de demonstração](docs/images/login.jpg)
