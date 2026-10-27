@@ -24,6 +24,14 @@ As alterações e os registros ficam somente no armazenamento local do navegador
 
 A URL pública foi conferida em navegador limpo: carregamento, mapa WebGL e assets, painel de setembro com cinco registros, consulta de histórico pelo perfil Técnico / Auxiliar, recarga e layout em telas de 320 e 390 px passaram.
 
+## Localização com fotos
+
+Abra uma área pelo mapa ou pela lista de Áreas e use **Como chegar**. Administradores podem cadastrar orientações; supervisores podem editar os locais da área designada à própria equipe. Técnicos e líderes consultam o caminho.
+
+Cada guia tem ponto de partida, até seis etapas ordenadas com foto e instrução e uma referência para reconhecer o destino. As fotos podem ser ampliadas no celular. Na página do equipamento, cadastre o trecho final e consulte também o caminho até a área. Não há trajetos reais pré-preenchidos.
+
+As fotos JPG, PNG e WebP são reduzidas no navegador antes de salvar. Assim como os demais cadastros da demonstração, os guias ficam no navegador usado e não são sincronizados entre colaboradores ou dispositivos. Se o armazenamento estiver indisponível ou cheio, a interface informa que a alteração ficou apenas na sessão. Compartilhamento real exige backend e armazenamento de arquivos. Ao transferir um equipamento para outra área, seu guia é removido para evitar instruções referentes ao local anterior.
+
 ## Executar
 
 Use Node.js 22.12 ou superior e npm.

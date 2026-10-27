@@ -1,3 +1,4 @@
+import type { ArrivalGuide } from './arrivalGuideModel';
 export type DemoRole = 'admin' | 'supervisor' | 'leader' | 'technician';
 export const roleLabels: Record<DemoRole, string> = { admin: 'Administrador', supervisor: 'Supervisor', leader: 'Líder', technician: 'Técnico / Auxiliar' };
 export const jobTitles = ['Eletromecânico 1', 'Eletromecânico 2', 'Eletromecânico 3', 'Auxiliar de Manutenção', 'Técnico', 'Líder', 'Supervisor'] as const;
@@ -6,6 +7,7 @@ export interface Collaborator { id: string; name: string; jobTitle: JobTitle; te
 
 
 export interface Area {
+  arrivalGuide?: ArrivalGuide;
   active: boolean;
   id: string;
   name: string;
@@ -18,6 +20,7 @@ export interface Area {
 export const equipmentTypes = ['Split Hi-Wall', 'Split Inverter', 'Janela', 'Piso Teto', 'Fan Coil', 'Chiller', 'Dutado'] as const;
 export type EquipmentType = typeof equipmentTypes[number];
 export interface Equipment {
+  arrivalGuide?: ArrivalGuide;
   active: boolean;
   id: string;
   areaId: string;

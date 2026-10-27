@@ -7,6 +7,8 @@ import { getExecutionStatus, getLatestSubmission, kindLabels, localDate, statusL
 import type { ExecutionKind, ExecutionPhoto, ExecutionRecord, ExecutionReport } from './model';
 import { useOperations } from './useOperations';
 import type { OperationResult } from './useOperations';
+import { ArrivalGuidePanel } from './ArrivalGuide';
+import type { AccessContext } from './workspaceModel';
 import './operations.css';
 import './teams.css';
 
@@ -14,6 +16,7 @@ interface OperationsPageProps {
   areaId: string;
   equipmentId?: string;
   role: DemoRole;
+  teamId?: string;
   onNavigate: (path: string) => void;
 }
 type Operations = ReturnType<typeof useOperations>;
@@ -48,9 +51,10 @@ function StatusBadge({ record }: { record: ExecutionRecord }) {
   return <span className={`op-status op-status-${status}`}><span />{statusLabels[status]}</span>;
 }
 
-export function OperationsPage({ areaId, equipmentId, role, onNavigate }: OperationsPageProps) {
+export function OperationsPage({ areaId, equipmentId, role, teamId, onNavigate }: OperationsPageProps) {
   const { areas, equipment } = useWorkspaceData();
   const operations = useOperations();
+  const access = { role, teamId };
   const area = areas.find((item) => item.id === areaId);
   const asset = equipmentId ? equipment.find((item) => item.id === equipmentId && item.areaId === areaId) : undefined;
   if (!area || (equipmentId && !asset)) return <section className="op-page" aria-label="Local não encontrado"><div className="op-empty"><h1>Este local não foi encontrado</h1><p>Volte ao mapa para escolher uma área ou um equipamento.</p><RouteLink path="/mapa" onNavigate={onNavigate} className="op-button op-button-primary">Voltar ao mapa</RouteLink></div></section>;
@@ -61,12 +65,12 @@ export function OperationsPage({ areaId, equipmentId, role, onNavigate }: Operat
     </nav>
     {!area.active && <p className="op-storage-warning" role="status">Área inativa. Os equipamentos e históricos continuam disponíveis para consulta.</p>}
     {asset && !asset.active && <p className="op-storage-warning" role="status">Equipamento inativo. O histórico de manutenção foi preservado.</p>}
-    {asset ? <EquipmentDetail key={`${asset.id}:${role}`} asset={asset} area={area} operations={operations} role={role} onNavigate={onNavigate} /> : <AreaDetail area={area} operations={operations} onNavigate={onNavigate} />}
+    {asset ? <EquipmentDetail key={`${asset.id}:${role}`} asset={asset} area={area} operations={operations} role={role} access={access} onNavigate={onNavigate} /> : <AreaDetail key={area.id} area={area} access={access} operations={operations} onNavigate={onNavigate} />}
     <DemoNotice warning={operations.storageWarning} />
   </section>;
 }
 
-function AreaDetail({ area, operations, onNavigate }: { area: Area; operations: Operations; onNavigate: OperationsPageProps['onNavigate'] }) {
+function AreaDetail({ area, operations, access, onNavigate }: { area: Area; access: AccessContext; operations: Operations; onNavigate: OperationsPageProps['onNavigate'] }) {
   const { teams, collaborators, equipment } = useWorkspaceData();
   const [month, setMonth] = useState(localDate().slice(0, 7));
   const monthId = useId();
@@ -76,6 +80,7 @@ function AreaDetail({ area, operations, onNavigate }: { area: Area; operations: 
   const summary = summarizeExecutions(records, month);
   return <>
     <header className="op-heading"><div><p className="op-eyebrow">ÁREA DA OPERAÇÃO · EXEMPLO</p><h1>{area.name}<span className="op-title-dot">.</span></h1><p className="op-lead">{area.description}</p></div><RouteLink path="/mapa" onNavigate={onNavigate} className="op-button op-button-light"><span aria-hidden="true">↗</span> Ver no mapa</RouteLink></header>
+    <ArrivalGuidePanel key={`${area.id}:${access.role}:${access.teamId}`} areaId={area.id} name={area.name} active={area.active} access={access} />
     <div className="op-metric-period"><p>Equipamentos e aprovações atuais. Preventivas por mês de execução.</p><label htmlFor={monthId}>Mês das preventivas<input id={monthId} type="month" value={month} onChange={(event) => { if (/^\d{4}-\d{2}$/.test(event.target.value)) setMonth(event.target.value); }} /></label></div>
     <div className="op-metrics">
       <div><span>Equipamentos cadastrados</span><strong>{assets.length.toString().padStart(2, '0')}</strong><small>Histórico disponível para a equipe</small></div>
@@ -100,7 +105,7 @@ function AreaDetail({ area, operations, onNavigate }: { area: Area; operations: 
   </>;
 }
 
-function EquipmentDetail({ asset, area, operations, role, onNavigate }: { asset: Equipment; area: Area; operations: Operations; role: DemoRole; onNavigate: OperationsPageProps['onNavigate'] }) {
+function EquipmentDetail({ asset, area, operations, role, access, onNavigate }: { asset: Equipment; area: Area; operations: Operations; role: DemoRole; access: AccessContext; onNavigate: OperationsPageProps['onNavigate'] }) {
   const [creating, setCreating] = useState(false);
   const [notice, setNotice] = useState('');
   const records = operations.records.filter((record) => record.equipmentId === asset.id);
@@ -109,6 +114,7 @@ function EquipmentDetail({ asset, area, operations, role, onNavigate }: { asset:
     <header className="op-heading"><div><p className="op-eyebrow">{asset.tag} · {asset.kind}</p><h1>{asset.name}<span className="op-title-dot">.</span></h1><p className="op-lead">{asset.location}</p></div>
       {role === 'technician' && area.active && asset.active && <button type="button" className="op-button op-button-primary" onClick={() => setCreating(!creating)} aria-expanded={creating} aria-controls="op-new-execution"><span aria-hidden="true">{creating ? '−' : '+'}</span> {creating ? 'Fechar formulário' : 'Registrar execução'}</button>}
     </header>
+    <ArrivalGuidePanel key={`${asset.id}:${access.role}:${access.teamId}`} areaId={area.id} equipmentId={asset.id} name={asset.name} active={area.active && asset.active} access={access} />
     <div className="op-equipment-layout"><section>
       {notice && <p className="op-success" role="status">{notice}</p>}
       {creating && role === 'technician' && area.active && asset.active && <section id="op-new-execution" className="op-form-panel"><p className="op-eyebrow">RELATO DE EXECUÇÃO</p><h2>Registrar execução</h2><p className="op-muted">Depois do envio, o supervisor revisa o relato e aprova a conclusão.</p><ReportForm onCancel={() => setCreating(false)} onSubmit={(report, kind) => {

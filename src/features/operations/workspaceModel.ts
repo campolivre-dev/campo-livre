@@ -1,3 +1,5 @@
+import { validateArrivalGuide } from './arrivalGuideModel.ts';
+import type { ArrivalGuide } from './arrivalGuideModel.ts';
 import { areas as seedAreas, teams as seedTeams, collaboratorsForTeam, jobTitles, roleLabels, equipment as seedEquipment, equipmentTypes } from './data.ts';
 import type { Area, Team, Collaborator, DemoRole, Equipment, EquipmentType } from './data.ts';
 
@@ -12,6 +14,7 @@ interface StoredMarker { id: string; position: MapPosition; hidden: boolean }
 export interface EquipmentInput { name: string; tag: string; kind: EquipmentType; areaId: string; location: string }
 export interface WorkspaceState { version: 3; equipment: Equipment[]; areas: Area[]; teams: Team[]; collaborators: Collaborator[]; markers: StoredMarker[] }
 export type WorkspaceAction =
+  | { type: 'setArrivalGuide'; id: string; entity: 'area' | 'equipment'; guide: ArrivalGuide | null }
   | { type: 'addEquipment' | 'updateEquipment'; id: string; input: EquipmentInput }
   | { type: 'setEquipmentActive'; id: string; active: boolean }
   | { type: 'addArea'; id: string; input: AddAreaInput }
@@ -89,7 +92,10 @@ export function applyWorkspaceAction(state: WorkspaceState, action: WorkspaceAct
   const ownTeam = (id: string | null) => access.role === 'supervisor' && !!access.teamId && id === access.teamId;
   if (access.role !== 'admin') {
     let allowed = false;
-    if (action.type === 'assignCollaborator') {
+    if (action.type === 'setArrivalGuide') {
+      const areaId = action.entity === 'area' ? action.id : find(state.equipment, action.id).areaId;
+      allowed = access.role === 'supervisor' && !!access.teamId && state.teams.some(team => team.id === access.teamId && team.areaId === areaId);
+    } else if (action.type === 'assignCollaborator') {
       const person = find(state.collaborators, action.id);
       allowed = access.role === 'supervisor' && !!access.teamId && (person.teamId === null || ownTeam(person.teamId)) && (action.teamId === null || ownTeam(action.teamId));
     } else if (action.type === 'setTeamArea') allowed = ownTeam(action.id);
@@ -101,6 +107,16 @@ export function applyWorkspaceAction(state: WorkspaceState, action: WorkspaceAct
     if ([...state.areas, ...state.teams, ...state.collaborators, ...state.equipment].some((item) => item.id === action.id)) throw new Error('Este identificador já está cadastrado.');
   }
   switch (action.type) {
+    case 'setArrivalGuide': {
+      if (action.entity !== 'area' && action.entity !== 'equipment') throw new Error('Local inválido.');
+      const collection = action.entity === 'area' ? 'areas' : 'equipment';
+      const item = action.entity === 'area' ? find(state.areas, action.id) : find(state.equipment, action.id);
+      const area = action.entity === 'area' ? find(state.areas, item.id) : find(state.areas, find(state.equipment, item.id).areaId);
+      if (!area.active || !item.active) throw new Error('Reative o local antes de alterar suas orientações.');
+      const arrivalGuide = action.guide === null ? undefined : validateArrivalGuide(action.guide);
+      if (collection === 'areas') return { ...state, areas: state.areas.map(item => item.id === action.id ? updateGuide(item, arrivalGuide) : item) };
+      return { ...state, equipment: state.equipment.map(item => item.id === action.id ? updateGuide(item, arrivalGuide) : item) };
+    }
     case 'addEquipment':
     case 'updateEquipment': {
       const existing = action.type === 'updateEquipment' ? find(state.equipment, action.id) : undefined;
@@ -111,6 +127,7 @@ export function applyWorkspaceAction(state: WorkspaceState, action: WorkspaceAct
       if (!existing || existing.areaId !== input.areaId) activeArea(state, input.areaId);
       if (state.equipment.some((item) => item.id !== action.id && item.tag.toLocaleLowerCase() === tag.toLocaleLowerCase())) throw new Error('Esta identificação já está cadastrada.');
       const item: Equipment = { ...existing, id: action.id, name, tag, kind: input.kind, areaId: input.areaId, location: requiredDescription(input.location), active: existing?.active ?? true };
+      if (existing && existing.areaId !== input.areaId) delete item.arrivalGuide;
       return { ...state, equipment: existing ? state.equipment.map((equipment) => equipment.id === action.id ? item : equipment) : [...state.equipment, item] };
     }
     case 'setEquipmentActive':
@@ -172,6 +189,12 @@ export function applyWorkspaceAction(state: WorkspaceState, action: WorkspaceAct
     }
   }
 }
+function updateGuide<T extends { arrivalGuide?: ArrivalGuide }>(item: T, guide?: ArrivalGuide): T {
+  const updated = { ...item };
+  if (guide) updated.arrivalGuide = guide;
+  else delete updated.arrivalGuide;
+  return updated;
+}
 function requiredDescription(value: unknown): string {
   if (typeof value !== 'string') throw new Error('Informe uma descrição válida.');
   return value.trim();
@@ -196,6 +219,7 @@ export function parseWorkspaceState(raw: string): WorkspaceState {
   }
   for (const area of state.areas) {
     position(area.position);
+    if (area.arrivalGuide !== undefined) area.arrivalGuide = validateArrivalGuide(area.arrivalGuide);
     if (typeof area.active !== 'boolean' || typeof area.description !== 'string' || !Array.isArray(area.equipmentIds) || !Array.isArray(area.teamIds) || ![...area.equipmentIds, ...area.teamIds].every((id) => typeof id === 'string')) throw new Error('Área local inválida.');
   }
   for (const team of state.teams) {
@@ -210,6 +234,7 @@ export function parseWorkspaceState(raw: string): WorkspaceState {
   const tags = new Set<string>();
   for (const item of state.equipment) {
     find(state.areas, item.areaId);
+    if (item.arrivalGuide !== undefined) item.arrivalGuide = validateArrivalGuide(item.arrivalGuide);
     const tag = required(item.tag, 'a identificação do equipamento').toLocaleLowerCase();
     if (tags.has(tag) || typeof item.active !== 'boolean' || typeof item.kind !== 'string' || typeof item.location !== 'string') throw new Error('Equipamento local inválido.');
     tags.add(tag);

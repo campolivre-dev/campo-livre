@@ -1,3 +1,4 @@
+import type { ArrivalGuide } from './arrivalGuideModel';
 import { useSyncExternalStore } from 'react';
 import { applyWorkspaceAction, createWorkspaceState, deriveWorkspace, parseWorkspaceState } from './workspaceModel';
 import type { AccessContext, EquipmentInput, CollaboratorInput, AddAreaInput, AddTeamInput, MapPosition, WorkspaceAction, WorkspaceResult } from './workspaceModel';
@@ -65,6 +66,7 @@ export function useWorkspaceData(access: AccessContext = { role: 'technician' })
   const snapshot = useSyncExternalStore(subscribe, getWorkspaceSnapshot, getWorkspaceSnapshot);
   const send = (action: WorkspaceAction) => dispatch(action, access);
   return { ...snapshot,
+    setArrivalGuide: (entity: 'area' | 'equipment', id: string, guide: ArrivalGuide | null) => send({ type: 'setArrivalGuide', entity, id, guide }),
     addEquipment: (input: EquipmentInput) => send({ type: 'addEquipment', id: newId(), input }),
     updateEquipment: (id: string, input: EquipmentInput) => send({ type: 'updateEquipment', id, input }),
     setEquipmentActive: (id: string, active: boolean) => send({ type: 'setEquipmentActive', id, active }),

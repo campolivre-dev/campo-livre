@@ -1,0 +1,73 @@
+.arrival-guide { margin: 0 0 30px; padding: 22px; border: 1px solid #ff9f0038; border-radius: 14px; background: linear-gradient(125deg, #25283a, #1b2336); }
+.arrival-heading { display: flex; align-items: flex-start; gap: 14px; }
+.arrival-icon { flex-shrink: 0; display: grid; place-items: center; width: 43px; height: 43px; border: 1px solid #ff9f0040; border-radius: 11px; color: #ffc363; background: #ff9f000b; }
+.arrival-heading > div { flex: 1; min-width: 0; }
+.arrival-heading h2 { margin-top: 3px; }
+.arrival-heading > div > p:last-child, .arrival-empty { font-size: 12px; line-height: 1.8; color: #b6c0d3; }
+.arrival-heading > div > p:last-child { margin-top: 7px; }
+.arrival-empty { padding: 18px 0 2px; }
+.arrival-open { display: flex; align-items: center; justify-content: space-between; gap: 16px; width: 100%; padding: 15px; margin-top: 18px; border: 1px solid #ffffff1d; border-radius: 9px; color: #f4f1eb; background: #131b2d; text-align: left; }
+.arrival-open > div { display: grid; gap: 4px; min-width: 0; }
+.arrival-open strong { font-size: 13px; overflow-wrap: anywhere; }
+.arrival-open > div > span { font-size: 11px; color: #b6c0d3; }
+.arrival-open > span { font-size: 12px; color: #ffc363; flex-shrink: 0; }
+.arrival-local-note { padding-top: 15px; font-size: 10px; color: #a5aec1; line-height: 1.8; }
+.arrival-parent { margin: 15px 0; font-size: 12px; }
+.arrival-parent > a { color: #ffcb7b; text-underline-offset: 3px; }
+.arrival-parent details { margin-top: 12px; padding: 12px 15px; border: 1px solid #ffffff20; border-radius: 8px; background: #182033; }
+.arrival-parent summary { cursor: pointer; color: #ffcb7b; min-height: 28px; }
+.arrival-path { padding-top: 20px; }
+.arrival-start, .arrival-destination { display: flex; gap: 12px; align-items: flex-start; padding: 15px; border-radius: 9px; background: #2a3348; }
+.arrival-start > svg, .arrival-destination > svg { color: #ffc363; margin-top: 3px; }
+.arrival-start > div { display: grid; gap: 4px; }
+.arrival-start span { font-size: 10px; color: #b6c0d3; }
+.arrival-start strong, .arrival-destination strong { font-size: 13px; overflow-wrap: anywhere; }
+.arrival-destination { background: #223b33; border: 1px solid #ffffff10; }
+.arrival-destination > svg { color: #a8ddb0; }
+.arrival-destination p { font-size: 13px; margin-top: 4px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.arrival-steps { padding: 0; list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin: 22px 0; }
+.arrival-steps > li { min-width: 0; padding: 14px; border: 1px solid #ffffff1c; border-radius: 11px; background: #161f32; }
+.arrival-step-copy { display: flex; gap: 10px; margin-bottom: 14px; }
+.arrival-step-copy > div { min-width: 0; }
+.arrival-step-number { flex-shrink: 0; display: grid; place-items: center; width: 28px; height: 28px; background: #ff9f00; color: #1b1b26; font-size: 12px; font-weight: 700; border-radius: 50%; }
+.arrival-step-copy h3 { font-size: 15px; margin: 3px 0 6px; overflow-wrap: anywhere; }
+.arrival-step-copy p { font-size: 12px; line-height: 1.8; color: #c6ccdc; white-space: pre-wrap; overflow-wrap: anywhere; }
+.arrival-photo { position: relative; display: block; width: 100%; padding: 0; border-radius: 8px; overflow: hidden; color: #fff; background: #111728; text-align: left; }
+.arrival-photo img { display: block; width: 100%; height: 180px; object-fit: contain; }
+.arrival-photo > span { display: flex; align-items: center; gap: 7px; padding: 9px 12px; font-size: 11px; color: #ffcb7b; background: #263149; }
+.arrival-photo svg { width: 14px; height: 14px; }
+.arrival-form > label { display: block; margin-top: 18px; }
+.arrival-form fieldset { min-width: 0; margin: 0; padding: 16px; border: 1px solid #ffffff25; border-radius: 10px; }
+.arrival-form legend { padding: 0 8px; color: #ffc363; font-size: 12px; font-weight: 600; }
+.arrival-form fieldset label { display: block; margin: 12px 0 6px; }
+.arrival-editor-steps { display: grid; gap: 18px; margin: 22px 0 16px; }
+.arrival-photo-preview { display: block; width: min(100%, 320px); max-height: 190px; object-fit: contain; border-radius: 8px; margin: 12px 0; background: #111728; }
+.arrival-field-hint { font-size: 11px; line-height: 1.8; color: #b6c0d3; margin-top: 7px !important; }
+.arrival-step-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.arrival-step-actions button, .arrival-remove button { padding: 8px 0; background: none; color: #ffcb7b; font-size: 11px; min-height: 40px; }
+.arrival-step-actions button:disabled { opacity: .4; cursor: not-allowed; }
+.arrival-remove { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 10px; font-size: 12px; }
+.arrival-remove button { color: #ddb9b5; }
+.arrival-photo-dialog { width: min(1050px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); padding: 18px; border: 1px solid #4c5873; border-radius: 13px; color: #f4f1eb; background: #141d30; }
+.arrival-photo-dialog::backdrop { background: #050813e8; }
+.arrival-photo-dialog header { display: flex; align-items: center; justify-content: space-between; gap: 14px; margin-bottom: 16px; }
+.arrival-photo-dialog header h2 { font-size: 19px; overflow-wrap: anywhere; }
+.arrival-photo-dialog header button { flex-shrink: 0; width: 44px; height: 44px; border: 1px solid #ffffff30; border-radius: 8px; color: #fff; background: #263149; font-size: 25px; }
+.arrival-photo-dialog img { display: block; max-width: 100%; max-height: 65dvh; margin: auto; object-fit: contain; }
+.arrival-photo-dialog p { margin-top: 16px; font-size: 14px; line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 1000px) { .arrival-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 650px) {
+  .arrival-guide { padding: 16px; }
+  .arrival-heading { flex-wrap: wrap; gap: 10px; }
+  .arrival-icon { width: 36px; height: 36px; }
+  .arrival-heading > .op-button { margin-left: 46px; }
+  .arrival-heading > div > p:last-child, .arrival-empty { font-size: 12px; }
+  .arrival-open { align-items: flex-start; flex-direction: column; gap: 12px; }
+  .arrival-steps { grid-template-columns: 1fr; gap: 16px; }
+  .arrival-step-copy h3 { font-size: 16px; }
+  .arrival-step-copy p { font-size: 14px; }
+  .arrival-photo img { height: auto; max-height: 300px; }
+  .arrival-start strong, .arrival-destination p { font-size: 14px; }
+  .arrival-form fieldset { padding: 12px; }
+  .arrival-step-actions { gap: 14px; }
+}
