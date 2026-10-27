@@ -1,0 +1,395 @@
+.login-layout {
+  --login-orange: #ff9f00;
+  --login-navy: #111728;
+  --login-blue: #202c52;
+  --login-plum: #2c1837;
+  --login-ivory: #f8f5ee;
+  grid-template-columns: minmax(0, 1.08fr) minmax(390px, .92fr);
+  background: var(--login-navy);
+  color: var(--login-ivory);
+}
+
+.login-layout .story-panel {
+  isolation: isolate;
+  padding: clamp(28px, 4vw, 56px) clamp(30px, 7vw, 104px) 28px;
+  background: linear-gradient(140deg, var(--login-navy), var(--login-blue) 56%, var(--login-plum));
+  color: var(--login-ivory);
+}
+
+.login-layout .story-panel::after {
+  z-index: -1;
+  opacity: .025;
+}
+
+.login-layout .brand {
+  gap: 15px;
+  color: var(--login-ivory);
+  letter-spacing: 0;
+}
+
+.login-layout .inhaus-logo {
+  display: block;
+  width: clamp(106px, 11vw, 148px);
+  height: auto;
+}
+
+.login-layout .brand-divider {
+  width: 1px;
+  height: 29px;
+  background: #f8f5ee55;
+}
+
+.login-layout .product-name {
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -.65px;
+}
+
+.login-layout .product-name span {
+  color: var(--login-orange);
+}
+
+.login-layout .story-content {
+  padding-top: 48px;
+  padding-bottom: 25px;
+}
+
+.login-layout .eyebrow {
+  color: #e5dfe9;
+  font-size: 9px;
+  letter-spacing: 1.7px;
+}
+
+.login-layout .eyebrow > span {
+  background: var(--login-orange);
+}
+
+.login-layout .story-content h1 {
+  margin: 20px 0 0;
+  color: var(--login-ivory);
+  font-family: 'Manrope', sans-serif;
+  font-size: clamp(32px, 3.15vw, 49px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -1.7px;
+}
+
+.login-layout .story-content h1 em {
+  color: var(--login-orange);
+}
+
+.login-layout .story-description {
+  margin-top: 15px;
+  color: #d4cfda;
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+.login-layout .brand-photo {
+  position: relative;
+  height: clamp(155px, 19vw, 230px);
+  margin: 26px -18px 22px;
+  overflow: hidden;
+  border: 1px solid #ffffff20;
+  border-radius: 10px;
+  background: var(--login-plum);
+  box-shadow: 0 18px 50px #080b1740;
+}
+
+.login-layout .brand-photo::after {
+  position: absolute;
+  inset: 0;
+  content: '';
+  background: linear-gradient(90deg, #11172820, transparent 68%), linear-gradient(0deg, #2c183755, transparent 70%);
+}
+
+.login-layout .brand-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 76% 53%;
+}
+
+.login-layout .story-bottom {
+  border-top-color: #ffffff24;
+  padding-top: 18px;
+}
+
+.login-layout .people-mark {
+  flex: 0 0 39px;
+  color: var(--login-orange);
+  border-color: #ff9f0055;
+}
+
+.login-layout .story-bottom strong {
+  color: var(--login-ivory);
+}
+
+.login-layout .story-bottom p {
+  color: #c4becd;
+}
+
+.login-layout .story-footer {
+  color: #b5aebe;
+}
+
+.login-layout .access-panel {
+  padding: 39px clamp(32px, 7vw, 96px) 27px;
+  background: var(--login-ivory);
+  color: #202333;
+}
+
+.login-layout .preview-badge {
+  border-color: #e2d9e5;
+  color: #5c4d62;
+}
+
+.login-layout .preview-badge > span {
+  background: var(--login-orange);
+}
+
+.login-layout .version,
+.login-layout .access-footer {
+  color: #837b88;
+}
+
+.login-layout .welcome-icon {
+  border-color: #f4d49e;
+  background: #fff0d5;
+  color: #a86500;
+}
+
+.login-layout .form-eyebrow {
+  color: #76556f;
+}
+
+.login-layout .login-content h2 {
+  margin: 10px 0 0;
+  color: #201d2b;
+  font-size: 30px;
+  font-weight: 650;
+  line-height: 1.4;
+  letter-spacing: -1.1px;
+}
+
+.login-layout .form-description {
+  margin-top: 11px;
+  color: #766f7b;
+}
+
+.login-layout .login-content form {
+  margin-top: 31px;
+}
+
+.login-layout .login-content label {
+  color: #322d39;
+}
+
+.login-layout .input-wrap {
+  border-color: #ded8df;
+  background: #fffdfa;
+}
+
+.login-layout .input-wrap:focus-within {
+  border-color: var(--login-orange);
+  box-shadow: 0 0 0 3px #ff9f0024;
+}
+
+.login-layout .input-wrap > svg {
+  color: #857c8b;
+}
+
+.login-layout .login-content input {
+  color: #282333;
+}
+
+.login-layout .login-content input::placeholder {
+  color: #a39aa6;
+}
+
+.login-layout .text-button {
+  color: #704877;
+}
+
+.login-layout .password-toggle {
+  color: #857c8b;
+}
+
+.login-layout .primary-button {
+  background: var(--login-orange);
+  color: #21182a;
+  font-weight: 700;
+}
+
+.login-layout .primary-button:hover {
+  background: #e98e00;
+}
+
+.login-layout .demo-entry {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 9px 4px;
+  background: transparent;
+  color: #624167;
+  font-size: 11px;
+  font-weight: 650;
+}
+
+.login-layout .demo-entry:hover {
+  color: #a86500;
+  text-decoration: underline;
+}
+
+.login-layout .demo-entry svg {
+  width: 14px;
+}
+
+.login-layout .demo-note {
+  margin-top: 13px;
+  border-color: #e9ddea;
+  background: #f0eaf1;
+}
+
+.login-layout .note-dot {
+  background: var(--login-orange);
+}
+
+.login-layout .demo-note p {
+  color: #716775;
+}
+
+.login-layout .demo-note strong {
+  color: #49384f;
+}
+
+.login-layout .notice {
+  color: #66416e;
+}
+
+.login-layout .community-link {
+  border-top-color: #e3dce5;
+}
+
+.login-layout .community-link > span {
+  color: #817987;
+}
+
+.login-layout .access-footer {
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .login-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(350px, .95fr);
+  }
+
+  .login-layout .story-panel {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .login-layout .access-panel {
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+
+  .login-layout .story-content h1 {
+    font-size: 35px;
+  }
+}
+
+@media (max-width: 720px) {
+  .login-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .login-layout .story-panel {
+    padding: 22px 7% 18px;
+  }
+
+  .login-layout .brand {
+    gap: 11px;
+  }
+
+  .login-layout .inhaus-logo {
+    width: 105px;
+  }
+
+  .login-layout .brand-divider {
+    height: 25px;
+  }
+
+  .login-layout .product-name {
+    font-size: 17px;
+  }
+
+  .login-layout .story-content {
+    padding: 30px 0 0;
+  }
+
+  .login-layout .eyebrow {
+    font-size: 8px;
+  }
+
+  .login-layout .story-content h1 {
+    margin-top: 13px;
+    font-size: clamp(31px, 8vw, 38px);
+  }
+
+  .login-layout .story-description {
+    margin-top: 9px;
+    font-size: 12px;
+  }
+
+  .login-layout .brand-photo {
+    height: 150px;
+    margin: 18px 0 0;
+  }
+
+  .login-layout .story-bottom,
+  .login-layout .story-footer {
+    display: none;
+  }
+
+  .login-layout .access-panel {
+    padding: 22px 7% 22px;
+  }
+
+  .login-layout .login-content {
+    max-width: 420px;
+    padding: 26px 0;
+  }
+
+  .login-layout .welcome-icon {
+    display: none;
+  }
+
+  .login-layout .form-eyebrow {
+    font-size: 8px;
+  }
+
+  .login-layout .login-content h2 {
+    font-size: 28px;
+  }
+
+  .login-layout .login-content input {
+    font-size: 16px;
+  }
+
+  .login-layout .password-label .text-button {
+    font-size: 11px;
+  }
+
+  .login-layout .access-footer {
+    max-width: 420px;
+    width: 100%;
+    margin: auto;
+    flex-direction: row;
+    font-size: 8px;
+  }
+}

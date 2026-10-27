@@ -1,0 +1,17 @@
+.git
+.agents
+.codex
+.scratch
+docs
+tests
+test-results
+playwright-report
+node_modules
+dist
+.env
+.env.*
+*.local
+*.tsbuildinfo
+AGENTS.md
+CLAUDE.md
+skills-lock.json

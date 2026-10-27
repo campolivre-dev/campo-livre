@@ -1,28 +1,28 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import { Icon } from '../../components/Icon';
-import { PlantIllustration } from './PlantIllustration';
+import './login.css';
 
-export function LoginPage() {
+export function LoginPage({ onEnter }: { onEnter: () => void }) {
   const [showPassword, setShowPassword] = useState(false);
   const [notice, setNotice] = useState('');
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setNotice('Esta é uma apresentação do CampoLivre. A autenticação e o painel do supervisor serão construídos nas próximas etapas. Nenhum dado foi enviado.');
+    onEnter();
   }
 
   return <main className="login-layout">
     <section className="story-panel" aria-label="Conheça o CampoLivre">
-      <a className="brand" href="/" aria-label="CampoLivre, início"><span className="brand-symbol"><Icon name="layers" /></span><span>campo<span className="brand-light">livre</span><span className="brand-period">.</span></span></a>
+      <a className="brand" href="/" aria-label="CampoLivre, início"><img className="inhaus-logo" src="/images/brand/inhaus-logo.png" alt="In-Haus Industrial" /><span className="brand-divider" aria-hidden="true" /><span className="product-name">Campo<span>Livre</span></span></a>
       <div className="story-content">
-        <span className="eyebrow"><span /> FEITO POR PESSOAS. PARA PESSOAS.</span>
+        <span className="eyebrow"><span /> GESTÃO DE MANUTENÇÃO INDUSTRIAL</span>
         <h1>Seu campo de trabalho.<br /><em>Todo conectado.</em></h1>
         <p className="story-description">Menos planilhas. Mais clareza para quem planeja,<br className="desktop-break" /> cuida e faz acontecer em campo.</p>
-        <PlantIllustration />
-        <div className="story-bottom"><div className="people-mark"><Icon name="people" /></div><div><strong>Construído em comunidade</strong><p>Um projeto aberto. Muitas mãos. Um mesmo propósito.</p></div></div>
+        <div className="brand-photo" aria-hidden="true"><img src="/images/brand/inhaus-banner.jpg" alt="" /></div>
+        <div className="story-bottom"><div className="people-mark"><Icon name="people" /></div><div><strong>Feito por pessoas. Para pessoas.</strong><p>Um espaço para equipes de campo trabalharem conectadas.</p></div></div>
       </div>
-      <footer className="story-footer"><span>GESTÃO DE MANUTENÇÃO E EQUIPES</span><span>JUNTOS, EM CAMPO <span aria-hidden="true">↗</span></span></footer>
+      <footer className="story-footer"><span>IN-HAUS INDUSTRIAL</span><span>JUNTOS, EM CAMPO <span aria-hidden="true">↗</span></span></footer>
     </section>
 
     <section className="access-panel" aria-labelledby="login-title">
@@ -39,6 +39,7 @@ export function LoginPage() {
           <div className="input-wrap"><Icon name="lock" /><input id="password" name="password" type={showPassword ? 'text' : 'password'} autoComplete="current-password" placeholder="Digite sua senha" required /><button className="password-toggle" type="button" aria-label={showPassword ? 'Ocultar senha' : 'Mostrar senha'} aria-pressed={showPassword} onClick={() => setShowPassword(!showPassword)}><Icon name={showPassword ? 'eye-off' : 'eye'} /></button></div>
           <button className="primary-button" type="submit">Entrar no CampoLivre<Icon name="arrow" /></button>
         </form>
+        <button className="demo-entry" type="button" onClick={onEnter}>Explorar demonstração sem preencher dados <Icon name="arrow" /></button>
         <div className="demo-note"><span className="note-dot" /><p><strong>Estamos construindo esse campo juntos.</strong><br />Esta tela é demonstrativa. Use dados fictícios.</p></div>
         <div className="notice" role="status" aria-live="polite">{notice}</div>
         <div className="community-link"><span>Quer fazer parte dessa construção?</span><button className="text-button" type="button" onClick={() => setNotice('O CampoLivre está reunindo mantenedores e colaboradores de produto, design e desenvolvimento. Fale com o organizador no grupo para participar.')} >Conheça o projeto <Icon name="arrow" /></button></div>
